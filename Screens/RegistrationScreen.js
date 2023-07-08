@@ -13,50 +13,71 @@ import {
 } from "react-native";
 export const RegistrationScreen = () => {
   const [isShow, setIsShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
-      <View style={{ ...styles.main }}>
-        <View style={{ ...styles.form, marginBottom: isShow ? 94 : 32 }}>
-          <Text style={styles.text}>Реєстрація</Text>
-          <View>
-            <TextInput
-              onFocus={() => {
-                setIsShow(true);
-              }}
-              style={{ ...styles.input, marginTop: 32 }}
-              placeholder="Логін"
-            />
-          </View>
-          <View>
-            <TextInput
-              onFocus={() => {
-                setIsShow(true);
-              }}
-              style={{ ...styles.input, marginTop: 16 }}
-              placeholder="Адреса електронної пошти"
-            />
-          </View>
-          <View>
-            <TextInput
-              onFocus={() => {
-                setIsShow(true);
-              }}
-              secureTextEntry={true}
-              style={{ ...styles.input, marginTop: 16 }}
-              placeholder="Пароль"
-            />
-          </View>
-          <TouchableOpacity style={styles.buttonPrimary}>
-            <Text style={styles.buttonText}>Зареєструватися</Text>
-          </TouchableOpacity>
+    <View style={{ ...styles.main }}>
+      <View style={{ ...styles.form }}>
+        <Text style={styles.text}>Реєстрація</Text>
+        <View>
+          <TextInput
+            onFocus={() => {
+              setIsShow(true);
+            }}
+            style={{ ...styles.input, marginTop: 32 }}
+            placeholder="Логін"
+          />
         </View>
+        <View>
+          <TextInput
+            onFocus={() => {
+              setIsShow(true);
+            }}
+            style={{ ...styles.input, marginTop: 16 }}
+            placeholder="Адреса електронної пошти"
+          />
+        </View>
+        <View style={{ position: "relative" }}>
+          <TextInput
+            onFocus={() => {
+              setIsShow(true);
+            }}
+            secureTextEntry={!showPassword}
+            style={{ ...styles.input, marginTop: 16 }}
+            placeholder="Пароль"
+          />
+          {!showPassword ? (
+            <TouchableOpacity
+              style={styles.showButton}
+              onPress={toggleShowPassword}
+            >
+              <Text>Показати</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.showButton}
+              onPress={toggleShowPassword}
+            >
+              <Text>Приховати</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
+        <TouchableOpacity style={styles.buttonPrimary}>
+          <Text style={styles.buttonText}>Зареєструватися</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.ButtonSecondary}>
+          <Text style={styles.textButtonSec}>Вже є акаунт? Увійти</Text>
+        </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
+  // cont: { paddingTop: 100 },
   main: {
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
@@ -86,6 +107,12 @@ const styles = StyleSheet.create({
   placeholder: {
     color: "#BDBDBD",
   },
+  showButton: {
+    position: "absolute",
+    top: 36,
+    right: 10,
+    alignItems: "center",
+  },
   buttonPrimary: {
     backgroundColor: "#FF6B01",
     borderRadius: 100,
@@ -95,6 +122,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     textAlign: "center",
+  },
+  ButtonSecondary: {
+    marginTop: 16,
+    alignItems: "center",
+  },
+  textButtonSec: {
+    color: "#1B4371",
   },
 });
 export default RegistrationScreen;
